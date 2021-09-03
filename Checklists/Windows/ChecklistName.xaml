@@ -1,0 +1,25 @@
+﻿<Window x:Class="Checklists.Windows.ChecklistName"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Checklists.Windows"
+        mc:Ignorable="d"
+        Title="Checklist Name"
+        Height="100" Width="300"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner">
+    <Grid Margin="4" VerticalAlignment="Center" FocusManager.FocusedElement="{Binding ElementName=DataTextBox}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <TextBox x:Name="DataTextBox" d:Text="Text input" GotFocus="SelectAllText" Margin="2" Height="22" Padding="2"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="2" HorizontalAlignment="Center">
+            <Button Content="Ok" Width="60" IsDefault="True" Click="SetDataClick" Margin="2"/>
+            <Button Content="Cancel" Width="60" IsCancel="True" Click="CancelClick" Margin="2"/>
+        </StackPanel>
+    </Grid>
+</Window>
