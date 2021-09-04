@@ -5,6 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>C:\Users\jorda\Desktop\WIP\checklists icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
