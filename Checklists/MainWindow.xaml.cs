@@ -1,13 +1,11 @@
 ﻿using Checklists.Models;
 using Checklists.Windows;
-using Microsoft.VisualBasic;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Checklists
 {

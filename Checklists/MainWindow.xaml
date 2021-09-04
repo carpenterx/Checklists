@@ -22,6 +22,11 @@
         </StackPanel>
 
         <ListView Grid.Row="1" x:Name="templatesListView" Margin="2" ScrollViewer.CanContentScroll="False">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="2" Margin="2" VerticalAlignment="Top"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Margin="4">
