@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\checked_icon.png" />
+    <Resource Include="Resources\unchecked_icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 

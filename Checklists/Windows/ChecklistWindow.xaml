@@ -4,12 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Checklists.Windows"
+        xmlns:models="clr-namespace:Checklists.Models"
         mc:Ignorable="d"
         Title="Checklist Window"
         Height="450" Width="400"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner"
         Closing="SaveChecklist">
+    <Window.Resources>
+        <models:BoolToIconConverter x:Key="BoolToIconConverter"/>
+    </Window.Resources>
     <Grid Margin="4">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -23,8 +27,9 @@
                 <DataTemplate>
                     <Border CornerRadius="6" BorderBrush="DarkGray" BorderThickness="1" Padding="4">
                         <StackPanel Orientation="Horizontal" Margin="4">
-                            <CheckBox IsChecked="{Binding IsDone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
-                            <TextBlock Text="{Binding Text}" Margin="2"/>
+                            <!--<CheckBox IsChecked="{Binding IsDone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>-->
+                            <Image Source="{Binding IsDone, Mode=OneWay, Converter={StaticResource BoolToIconConverter}}" Width="20" Height="20" Margin="2"/>
+                            <TextBlock Text="{Binding Text}" Margin="2" FontSize="14"/>
                         </StackPanel>
                     </Border>
                 </DataTemplate>
