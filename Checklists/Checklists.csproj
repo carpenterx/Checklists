@@ -8,7 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\checked_icon.png" />
+    <None Remove="Resources\hover_icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Resources\checked_icon.png" />
+    <Resource Include="Resources\hover_icon.png" />
     <Resource Include="Resources\unchecked_icon.png" />
   </ItemGroup>
 
