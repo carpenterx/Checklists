@@ -11,11 +11,19 @@ namespace Checklists.Windows
     {
         private ChecklistTemplate checklistTemplate = new();
 
-        //private ObservableCollection<ChecklistStep> checklistSteps = new();
         public TemplateWindow()
         {
             InitializeComponent();
 
+            DataContext = checklistTemplate;
+            stepsListView.ItemsSource = checklistTemplate.ChecklistSteps;
+        }
+
+        public TemplateWindow(ChecklistTemplate templateToEdit)
+        {
+            InitializeComponent();
+
+            checklistTemplate = templateToEdit;
             DataContext = checklistTemplate;
             stepsListView.ItemsSource = checklistTemplate.ChecklistSteps;
         }

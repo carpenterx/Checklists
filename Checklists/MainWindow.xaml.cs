@@ -129,5 +129,18 @@ namespace Checklists
                 File.Delete(templatePath);
             }
         }
+
+        private void EditTemplate(object sender, RoutedEventArgs e)
+        {
+            if (templatesListView.SelectedItem is ChecklistTemplate selectedTemplate)
+            {
+                TemplateWindow templateWindow = new(selectedTemplate);
+                templateWindow.Owner = this;
+                if (templateWindow.ShowDialog() == true)
+                {
+                    selectedTemplate = templateWindow.GetTemplate();
+                }
+            }
+        }
     }
 }

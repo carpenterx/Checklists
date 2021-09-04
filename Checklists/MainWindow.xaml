@@ -16,6 +16,7 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="New Template" Width="120" Click="AddNewTemplate" Margin="2"/>
+            <Button Content="Edit Template" Width="120" Click="EditTemplate" Margin="2"/>
             <Button Content="Delete Template" Width="120" Click="DeleteTemplate" Margin="2"/>
             <Button Content="New Checklist" Width="120" Click="CreateChecklist" Margin="2"/>
             <Button Content="Load Checklist" Width="120" Click="LoadChecklist" Margin="2"/>
