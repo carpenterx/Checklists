@@ -44,7 +44,7 @@
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="{Binding Name}" d:Text="Checklist Title" FontSize="20" HorizontalAlignment="Center" Margin="4"/>
+        <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" d:Text="Checklist Title" FontSize="20" HorizontalAlignment="Stretch" TextAlignment="Center" Margin="4"/>
 
         <ListView Grid.Row="1" ItemsSource="{Binding ChecklistSteps}" Margin="2" ScrollViewer.CanContentScroll="False">
             <ListView.ItemTemplate>
@@ -56,7 +56,6 @@
                                 <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
                             <CheckBox Style="{StaticResource myCheckboxStyle}" IsChecked="{Binding IsDone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
-                            <!--<Image Source="{Binding IsDone, Mode=OneWay, Converter={StaticResource BoolToIconConverter}}" Width="20" Height="20" Margin="2"/>-->
                             <TextBlock Grid.Column="1" Text="{Binding Text}" Margin="2" FontSize="14" VerticalAlignment="Center"/>
                         </Grid>
                     </Border>
