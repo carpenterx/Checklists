@@ -46,5 +46,13 @@ namespace Checklists.Windows
                 checklistTemplate.ChecklistSteps.Add(new ChecklistStep(stepTxt.Text));
             }
         }
+
+        private void DeleteActionClick(object sender, RoutedEventArgs e)
+        {
+            if (stepsListView.SelectedItem is ChecklistStep selectedStep)
+            {
+                checklistTemplate.ChecklistSteps.Remove(selectedStep);
+            }
+        }
     }
 }

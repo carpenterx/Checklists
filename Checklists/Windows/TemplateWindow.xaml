@@ -34,10 +34,12 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             
             <TextBox x:Name="stepTxt" d:Text="Action text" Margin="2" Padding="2"/>
             <Button Grid.Column="1" Content="Add Action" Width="80" Click="AddActionClick" Margin="2"/>
+            <Button Grid.Column="2" Content="Delete Action" Width="80" Click="DeleteActionClick" Margin="2"/>
         </Grid>
 
         <ListView x:Name="stepsListView" Grid.Row="3" Grid.Column="1" Margin="2" ScrollViewer.CanContentScroll="False">
