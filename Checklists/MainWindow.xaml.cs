@@ -14,9 +14,11 @@ namespace Checklists
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static readonly string APPLICATION_FOLDER = "Checklists";
-        private static readonly string TEMPLATES_FOLDER = "Templates";
-        private static readonly string TEMPLATE_EXTENSION = ".json";
+        private const string APPLICATION_FOLDER = "Checklists";
+        private const string TEMPLATES_FOLDER = "Templates";
+        private const string TEMPLATE_EXTENSION = ".json";
+        private const string CHECKLIST_EXTENSION = ".check";
+        private const string CHECKLIST_FILE = "Checklist";
 
         private ObservableCollection<ChecklistTemplate> checklistTemplates = new();
 
@@ -85,9 +87,8 @@ namespace Checklists
             if (templatesListView.SelectedItem is ChecklistTemplate selectedTemplate)
             {
                 SaveFileDialog dlg = new SaveFileDialog();
-                dlg.Title = "Save Checklist File";
-                dlg.Filter = "Json Files(*.json)|*.json";
-                //dlg.FileName = "hotspots";
+                dlg.Title = $"Save {CHECKLIST_FILE} File";
+                dlg.Filter = $"{CHECKLIST_FILE} Files(*{CHECKLIST_EXTENSION})|*{CHECKLIST_EXTENSION}";
 
                 if (dlg.ShowDialog() == true)
                 {
@@ -106,8 +107,8 @@ namespace Checklists
         private void LoadChecklist(object sender, RoutedEventArgs e)
         {
             FileDialog dlg = new OpenFileDialog();
-            dlg.Title = "Load Checklist";
-            dlg.Filter = "Json Files(*.json)|*.json";
+            dlg.Title = $"Load {CHECKLIST_FILE}";
+            dlg.Filter = $"{CHECKLIST_FILE} Files(*{CHECKLIST_EXTENSION})|*{CHECKLIST_EXTENSION}";
             if (dlg.ShowDialog() == true)
             {
                 Checklist checklist = JsonConvert.DeserializeObject<Checklist>(File.ReadAllText(dlg.FileName));
