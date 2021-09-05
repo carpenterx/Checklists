@@ -1,4 +1,5 @@
 ﻿using Checklists.Models;
+using Checklists.Properties;
 using Checklists.Windows;
 using Microsoft.Win32;
 using Newtonsoft.Json;
@@ -16,9 +17,9 @@ namespace Checklists
     {
         private const string APPLICATION_FOLDER = "Checklists";
         private const string TEMPLATES_FOLDER = "Templates";
-        private const string TEMPLATE_EXTENSION = ".json";
-        private const string CHECKLIST_EXTENSION = ".chek";
-        private const string CHECKLIST_FILE = "Checklist";
+        //private const string TEMPLATE_EXTENSION = ".json";
+        //private const string CHECKLIST_EXTENSION = ".chek";
+        //private const string CHECKLIST_FILE = "Checklist";
 
         private ObservableCollection<ChecklistTemplate> checklistTemplates = new();
 
@@ -31,6 +32,23 @@ namespace Checklists
             templatesListView.ItemsSource = checklistTemplates;
         }
 
+        public MainWindow(string checklistPath)
+        {
+            InitializeComponent();
+
+            LoadAllTemplates();
+
+            templatesListView.ItemsSource = checklistTemplates;
+
+            Checklist checklist = JsonConvert.DeserializeObject<Checklist>(File.ReadAllText(checklistPath));
+            ChecklistWindow checklistWindow = new(checklist, checklistPath);
+            //checklistWindow.Owner = this;
+            if (checklistWindow.ShowDialog() == true)
+            {
+
+            }
+        }
+
         private void LoadAllTemplates()
         {
             checklistTemplates.Clear();
@@ -38,7 +56,7 @@ namespace Checklists
             string templatesDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), APPLICATION_FOLDER, TEMPLATES_FOLDER);
             if (Directory.Exists(templatesDirectory))
             {
-                string[] templateFiles = Directory.GetFiles(templatesDirectory, $"*{TEMPLATE_EXTENSION}");
+                string[] templateFiles = Directory.GetFiles(templatesDirectory, $"*{Settings.Default.TemplateExtension}");
                 foreach (string templateFile in templateFiles)
                 {
                     checklistTemplates.Add(GetChecklistTemplate(templateFile));
@@ -76,7 +94,7 @@ namespace Checklists
 
         private void SaveTemplate(ChecklistTemplate template, string rootPath)
         {
-            string templatePath = Path.Combine(rootPath, $"{template.FileName}{TEMPLATE_EXTENSION}");
+            string templatePath = Path.Combine(rootPath, $"{template.FileName}{Settings.Default.TemplateExtension}");
 
             string json = JsonConvert.SerializeObject(template, Formatting.Indented);
             File.WriteAllText(templatePath, json);
@@ -87,8 +105,8 @@ namespace Checklists
             if (templatesListView.SelectedItem is ChecklistTemplate selectedTemplate)
             {
                 SaveFileDialog dlg = new SaveFileDialog();
-                dlg.Title = $"Save {CHECKLIST_FILE} File";
-                dlg.Filter = $"{CHECKLIST_FILE} Files(*{CHECKLIST_EXTENSION})|*{CHECKLIST_EXTENSION}";
+                dlg.Title = $"Save {Settings.Default.ChecklistFile} File";
+                dlg.Filter = $"{Settings.Default.ChecklistFile} Files(*{Settings.Default.ChecklistExtension})|*{Settings.Default.ChecklistExtension}";
 
                 if (dlg.ShowDialog() == true)
                 {
@@ -107,8 +125,8 @@ namespace Checklists
         private void LoadChecklist(object sender, RoutedEventArgs e)
         {
             FileDialog dlg = new OpenFileDialog();
-            dlg.Title = $"Load {CHECKLIST_FILE}";
-            dlg.Filter = $"{CHECKLIST_FILE} Files(*{CHECKLIST_EXTENSION})|*{CHECKLIST_EXTENSION}";
+            dlg.Title = $"Load {Settings.Default.ChecklistFile}";
+            dlg.Filter = $"{Settings.Default.ChecklistFile} Files(*{Settings.Default.ChecklistExtension})|*{Settings.Default.ChecklistExtension}";
             if (dlg.ShowDialog() == true)
             {
                 Checklist checklist = JsonConvert.DeserializeObject<Checklist>(File.ReadAllText(dlg.FileName));
@@ -126,7 +144,7 @@ namespace Checklists
             if (templatesListView.SelectedItem is ChecklistTemplate selectedTemplate)
             {
                 checklistTemplates.Remove(selectedTemplate);
-                string templatePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), APPLICATION_FOLDER, TEMPLATES_FOLDER, $"{selectedTemplate.FileName}{TEMPLATE_EXTENSION}");
+                string templatePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), APPLICATION_FOLDER, TEMPLATES_FOLDER, $"{selectedTemplate.FileName}{Settings.Default.TemplateExtension}");
                 File.Delete(templatePath);
             }
         }
