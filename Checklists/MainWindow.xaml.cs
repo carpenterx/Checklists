@@ -17,7 +17,7 @@ namespace Checklists
         private const string APPLICATION_FOLDER = "Checklists";
         private const string TEMPLATES_FOLDER = "Templates";
         private const string TEMPLATE_EXTENSION = ".json";
-        private const string CHECKLIST_EXTENSION = ".check";
+        private const string CHECKLIST_EXTENSION = ".chek";
         private const string CHECKLIST_FILE = "Checklist";
 
         private ObservableCollection<ChecklistTemplate> checklistTemplates = new();
