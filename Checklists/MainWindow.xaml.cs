@@ -21,24 +21,19 @@ namespace Checklists
         //private const string CHECKLIST_EXTENSION = ".chek";
         //private const string CHECKLIST_FILE = "Checklist";
 
+        private const string CHECKLISTS_HISTORY = "Checklists.json";
+
         private ObservableCollection<ChecklistTemplate> checklistTemplates = new();
+        private ObservableCollection<ChecklistFile> checklistFiles = new();
 
         public MainWindow()
         {
-            InitializeComponent();
-
-            LoadAllTemplates();
-
-            templatesListView.ItemsSource = checklistTemplates;
+            InitializeApplication();
         }
 
         public MainWindow(string checklistPath)
         {
-            InitializeComponent();
-
-            LoadAllTemplates();
-
-            templatesListView.ItemsSource = checklistTemplates;
+            InitializeApplication();
 
             Checklist checklist = JsonConvert.DeserializeObject<Checklist>(File.ReadAllText(checklistPath));
             ChecklistWindow checklistWindow = new(checklist, checklistPath);
@@ -47,6 +42,18 @@ namespace Checklists
             {
 
             }
+        }
+
+        private void InitializeApplication()
+        {
+            InitializeComponent();
+
+            LoadAllTemplates();
+
+            LoadChecklistsHistory();
+
+            templatesListView.ItemsSource = checklistTemplates;
+            checklistsListView.ItemsSource = checklistFiles;
         }
 
         private void LoadAllTemplates()
@@ -69,6 +76,15 @@ namespace Checklists
             return JsonConvert.DeserializeObject<ChecklistTemplate>(File.ReadAllText(filePath));
         }
 
+        private void LoadChecklistsHistory()
+        {
+            string checklistsHistoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), APPLICATION_FOLDER, CHECKLISTS_HISTORY);
+            if (File.Exists(checklistsHistoryPath))
+            {
+                checklistFiles = JsonConvert.DeserializeObject<ObservableCollection<ChecklistFile>>(File.ReadAllText(checklistsHistoryPath));
+            }
+        }
+
         private void AddNewTemplate(object sender, RoutedEventArgs e)
         {
             TemplateWindow templateWindow = new();
@@ -79,7 +95,14 @@ namespace Checklists
             }
         }
 
-        private void SaveTemplatesOnClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void SaveDataOnClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            SaveTemplates();
+
+            SaveChecklistsHistory();
+        }
+
+        private void SaveTemplates()
         {
             string templatesDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), APPLICATION_FOLDER, TEMPLATES_FOLDER);
             if (!Directory.Exists(templatesDirectory))
@@ -100,6 +123,13 @@ namespace Checklists
             File.WriteAllText(templatePath, json);
         }
 
+        private void SaveChecklistsHistory()
+        {
+            string checklistsHistoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), APPLICATION_FOLDER, CHECKLISTS_HISTORY);
+            string json = JsonConvert.SerializeObject(checklistFiles, Formatting.Indented);
+            File.WriteAllText(checklistsHistoryPath, json);
+        }
+
         private void CreateChecklist(object sender, RoutedEventArgs e)
         {
             if (templatesListView.SelectedItem is ChecklistTemplate selectedTemplate)
@@ -117,6 +147,7 @@ namespace Checklists
                         Checklist checklist = new Checklist(nameWindow.Data, selectedTemplate);
                         string json = JsonConvert.SerializeObject(checklist, Formatting.Indented);
                         File.WriteAllText(dlg.FileName, json);
+                        checklistFiles.Add(new ChecklistFile(checklist.Name, dlg.FileName));
                     }
                 }
             }
@@ -124,18 +155,42 @@ namespace Checklists
 
         private void LoadChecklist(object sender, RoutedEventArgs e)
         {
-            FileDialog dlg = new OpenFileDialog();
-            dlg.Title = $"Load {Settings.Default.ChecklistFile}";
-            dlg.Filter = $"{Settings.Default.ChecklistFile} Files(*{Settings.Default.ChecklistExtension})|*{Settings.Default.ChecklistExtension}";
-            if (dlg.ShowDialog() == true)
+            if (checklistsListView.SelectedItem is ChecklistFile selectedChecklistFile)
             {
-                Checklist checklist = JsonConvert.DeserializeObject<Checklist>(File.ReadAllText(dlg.FileName));
-                ChecklistWindow checklistWindow = new(checklist, dlg.FileName);
-                checklistWindow.Owner = this;
-                if (checklistWindow.ShowDialog() == true)
+                LoadChecklistFile(selectedChecklistFile.FilePath);
+            }
+            else
+            {
+                FileDialog dlg = new OpenFileDialog();
+                dlg.Title = $"Load {Settings.Default.ChecklistFile}";
+                dlg.Filter = $"{Settings.Default.ChecklistFile} Files(*{Settings.Default.ChecklistExtension})|*{Settings.Default.ChecklistExtension}";
+                if (dlg.ShowDialog() == true)
                 {
-
+                    LoadAndAddChecklistFile(dlg.FileName);
                 }
+            }
+        }
+
+        private void LoadChecklistFile(string checklistPath)
+        {
+            Checklist checklist = JsonConvert.DeserializeObject<Checklist>(File.ReadAllText(checklistPath));
+            ChecklistWindow checklistWindow = new(checklist, checklistPath);
+            checklistWindow.Owner = this;
+            if (checklistWindow.ShowDialog() == true)
+            {
+
+            }
+        }
+
+        private void LoadAndAddChecklistFile(string checklistPath)
+        {
+            Checklist checklist = JsonConvert.DeserializeObject<Checklist>(File.ReadAllText(checklistPath));
+            checklistFiles.Add(new ChecklistFile(checklist.Name, checklistPath));
+            ChecklistWindow checklistWindow = new(checklist, checklistPath);
+            checklistWindow.Owner = this;
+            if (checklistWindow.ShowDialog() == true)
+            {
+
             }
         }
 
@@ -159,6 +214,14 @@ namespace Checklists
                 {
                     selectedTemplate = templateWindow.GetTemplate();
                 }
+            }
+        }
+
+        private void DeleteChecklist(object sender, RoutedEventArgs e)
+        {
+            if (checklistsListView.SelectedItem is ChecklistFile selectedChecklistFile)
+            {
+                checklistFiles.Remove(selectedChecklistFile);
             }
         }
     }

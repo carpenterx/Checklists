@@ -7,19 +7,28 @@
         mc:Ignorable="d"
         Title="Checklists"
         Height="450" Width="800"
-        Closing="SaveTemplatesOnClosing">
+        Closing="SaveDataOnClosing">
     <Grid Margin="4">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="New Template" Width="120" Click="AddNewTemplate" Margin="2"/>
             <Button Content="Edit Template" Width="120" Click="EditTemplate" Margin="2"/>
             <Button Content="Delete Template" Width="120" Click="DeleteTemplate" Margin="2"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="New Checklist" Width="120" Click="CreateChecklist" Margin="2"/>
             <Button Content="Load Checklist" Width="120" Click="LoadChecklist" Margin="2"/>
+            <Button Content="Delete Checklist" Width="120" Click="DeleteChecklist" Margin="2"/>
         </StackPanel>
 
         <ListView Grid.Row="1" x:Name="templatesListView" Margin="2" ScrollViewer.CanContentScroll="False">
@@ -32,6 +41,16 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Margin="4">
                         <TextBlock Text="{Binding Name}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <ListView Grid.Row="1" Grid.Column="1" x:Name="checklistsListView" Margin="2" ScrollViewer.CanContentScroll="False">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="4">
+                        <TextBlock Text="{Binding ChecklistName}" />
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
