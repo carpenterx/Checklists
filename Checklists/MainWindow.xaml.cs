@@ -134,15 +134,16 @@ namespace Checklists
         {
             if (templatesListView.SelectedItem is ChecklistTemplate selectedTemplate)
             {
-                SaveFileDialog dlg = new SaveFileDialog();
-                dlg.Title = $"Save {Settings.Default.ChecklistFile} File";
-                dlg.Filter = $"{Settings.Default.ChecklistFile} Files(*{Settings.Default.ChecklistExtension})|*{Settings.Default.ChecklistExtension}";
-
-                if (dlg.ShowDialog() == true)
+                ChecklistName nameWindow = new();
+                nameWindow.Owner = this;
+                if (nameWindow.ShowDialog() == true)
                 {
-                    ChecklistName nameWindow = new();
-                    nameWindow.Owner = this;
-                    if (nameWindow.ShowDialog() == true)
+                    SaveFileDialog dlg = new SaveFileDialog();
+                    dlg.Title = $"Save {Settings.Default.ChecklistFile} File";
+                    dlg.FileName = nameWindow.Data;
+                    dlg.Filter = $"{Settings.Default.ChecklistFile} Files(*{Settings.Default.ChecklistExtension})|*{Settings.Default.ChecklistExtension}";
+
+                    if (dlg.ShowDialog() == true)
                     {
                         Checklist checklist = new Checklist(nameWindow.Data, selectedTemplate);
                         string json = JsonConvert.SerializeObject(checklist, Formatting.Indented);
