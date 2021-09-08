@@ -138,14 +138,23 @@ namespace Checklists
                 nameWindow.Owner = this;
                 if (nameWindow.ShowDialog() == true)
                 {
+                    Checklist checklist;
+                    if (nameWindow.checklistVariables.Count > 0)
+                    {
+                        checklist = new Checklist(nameWindow.Name, selectedTemplate, nameWindow.checklistVariables);
+                    }
+                    else
+                    {
+                        checklist = new Checklist(nameWindow.Name, selectedTemplate);
+                    }
+
                     SaveFileDialog dlg = new SaveFileDialog();
                     dlg.Title = $"Save {Settings.Default.ChecklistFile} File";
-                    dlg.FileName = nameWindow.Name;
+                    dlg.FileName = checklist.Name;
                     dlg.Filter = $"{Settings.Default.ChecklistFile} Files(*{Settings.Default.ChecklistExtension})|*{Settings.Default.ChecklistExtension}";
 
                     if (dlg.ShowDialog() == true)
                     {
-                        Checklist checklist = new Checklist(nameWindow.Name, selectedTemplate);
                         string json = JsonConvert.SerializeObject(checklist, Formatting.Indented);
                         File.WriteAllText(dlg.FileName, json);
                         checklistFiles.Add(new ChecklistFile(checklist.Name, dlg.FileName));
