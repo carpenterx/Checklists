@@ -9,7 +9,7 @@
         Height="300" Width="300"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner">
-    <Grid Margin="4" FocusManager.FocusedElement="{Binding ElementName=DataTextBox}">
+    <Grid Margin="4" FocusManager.FocusedElement="{Binding ElementName=NameTextBox}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
