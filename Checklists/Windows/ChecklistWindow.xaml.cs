@@ -19,6 +19,8 @@ namespace Checklists.Windows
             filePath = path;
             Checklist = checklist;
             DataContext = Checklist;
+
+            Title = Path.GetFileName(filePath);
         }
 
         private void SaveChecklist(object sender, System.ComponentModel.CancelEventArgs e)
