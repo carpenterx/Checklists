@@ -18,7 +18,7 @@
 
         <TextBox x:Name="NameTextBox" d:Text="Text input" GotFocus="SelectAllText" Margin="4" Height="22" Padding="2"/>
 
-        <ListView Grid.Row="1" x:Name="variablesListView" Margin="4">
+        <ListView Grid.Row="1" x:Name="variablesListView" KeyboardNavigation.TabNavigation="Continue" Margin="4">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="4">
@@ -34,6 +34,7 @@
             </ListView.ItemTemplate>
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
+                    <Setter Property="IsTabStop" Value="False"/>
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     <Setter Property="Padding" Value="2"/>
                 </Style>
