@@ -183,25 +183,44 @@ namespace Checklists
 
         private void LoadChecklistFile(string checklistPath)
         {
-            Checklist checklist = JsonConvert.DeserializeObject<Checklist>(File.ReadAllText(checklistPath));
-            ChecklistWindow checklistWindow = new(checklist, checklistPath);
-            checklistWindow.Owner = this;
-            if (checklistWindow.ShowDialog() == true)
+            if (File.Exists(checklistPath))
             {
+                Checklist checklist = JsonConvert.DeserializeObject<Checklist>(File.ReadAllText(checklistPath));
+                ChecklistWindow checklistWindow = new(checklist, checklistPath);
+                checklistWindow.Owner = this;
+                if (checklistWindow.ShowDialog() == true)
+                {
 
+                }
+            }
+            else
+            {
+                ShowFileNotFoundError(checklistPath);
             }
         }
 
         private void LoadAndAddChecklistFile(string checklistPath)
         {
-            Checklist checklist = JsonConvert.DeserializeObject<Checklist>(File.ReadAllText(checklistPath));
-            checklistFiles.Add(new ChecklistFile(checklist.Name, checklistPath));
-            ChecklistWindow checklistWindow = new(checklist, checklistPath);
-            checklistWindow.Owner = this;
-            if (checklistWindow.ShowDialog() == true)
+            if (File.Exists(checklistPath))
             {
+                Checklist checklist = JsonConvert.DeserializeObject<Checklist>(File.ReadAllText(checklistPath));
+                checklistFiles.Add(new ChecklistFile(checklist.Name, checklistPath));
+                ChecklistWindow checklistWindow = new(checklist, checklistPath);
+                checklistWindow.Owner = this;
+                if (checklistWindow.ShowDialog() == true)
+                {
 
+                }
             }
+            else
+            {
+                ShowFileNotFoundError(checklistPath);
+            }
+        }
+
+        private void ShowFileNotFoundError(string path)
+        {
+            MessageBox.Show($"Could not find checklist file at: {path}", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private void DeleteTemplate(object sender, RoutedEventArgs e)
