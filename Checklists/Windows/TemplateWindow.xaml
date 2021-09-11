@@ -23,13 +23,13 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <Label Content="Template Name" Margin="2"/>
-        <TextBox Grid.Column="1" d:Text="The name of the template" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2" Padding="2"/>
+        <Label Content="Template Name" Margin="2" Height="26"/>
+        <TextBox Grid.Column="1" d:Text="The name of the template" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" Margin="2" Padding="2" Height="26"/>
 
-        <Label Grid.Row="1" Content="File Name" Margin="2"/>
-        <TextBox Grid.Row="1"  Grid.Column="1" d:Text="The name of the template file" Text="{Binding FileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2" Padding="2"/>
+        <Label Grid.Row="1" Content="File Name" Margin="2" Height="26"/>
+        <TextBox Grid.Row="1"  Grid.Column="1" d:Text="The name of the template file" Text="{Binding FileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" Margin="2" Padding="2" Height="26"/>
 
-        <Label Grid.Row="2" Content="Steps" Margin="2"/>
+        <Label Grid.Row="2" Content="Steps" Margin="2" Height="26"/>
         <Grid  Grid.Row="2" Grid.Column="1" Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
@@ -37,9 +37,9 @@
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             
-            <TextBox x:Name="stepTxt" d:Text="Action text" Margin="2" Padding="2"/>
-            <Button Grid.Column="1" Content="Add Action" Width="80" Click="AddActionClick" Margin="2"/>
-            <Button Grid.Column="2" Content="Delete Action" Width="80" Click="DeleteActionClick" Margin="2"/>
+            <TextBox x:Name="stepTxt" d:Text="Action text" Margin="2" Padding="2" VerticalContentAlignment="Center" Height="26"/>
+            <Button Grid.Column="1" Content="Add Action" Width="80" Click="AddActionClick" Margin="2" Height="26"/>
+            <Button Grid.Column="2" Content="Delete Action" Width="80" Click="DeleteActionClick" Margin="2" Height="26"/>
         </Grid>
 
         <ListView x:Name="stepsListView" Grid.Row="3" Grid.Column="1" Margin="2" ScrollViewer.CanContentScroll="False">
@@ -54,8 +54,8 @@
         </ListView>
 
         <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="2">
-            <Button Content="Cancel" IsCancel="True" Width="60" Margin="2"/>
-            <Button Content="Ok" IsDefault="True" Width="60" Margin="2" Click="AddTemplateClick"/>
+            <Button Content="Cancel" IsCancel="True" Width="60" Margin="2" Height="26"/>
+            <Button Content="Ok" IsDefault="True" Width="60" Margin="2" Click="AddTemplateClick" Height="26"/>
         </StackPanel>
     </Grid>
 </Window>

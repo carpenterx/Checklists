@@ -16,9 +16,9 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <TextBox x:Name="NameTextBox" d:Text="Text input" GotFocus="SelectAllText" Margin="4" Height="22" Padding="2"/>
+        <TextBox x:Name="NameTextBox" d:Text="Text input" GotFocus="SelectAllText" Margin="4" Height="24" Padding="2"/>
 
-        <ListView Grid.Row="1" x:Name="variablesListView" KeyboardNavigation.TabNavigation="Continue" Margin="4">
+        <ListView Grid.Row="1" x:Name="variablesListView" Height="182" KeyboardNavigation.TabNavigation="Continue" ScrollViewer.CanContentScroll="False" Margin="4">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="4">
@@ -42,8 +42,8 @@
         </ListView>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="2" HorizontalAlignment="Center">
-            <Button Content="Ok" Width="60" IsDefault="True" Click="SetDataClick" Margin="2"/>
-            <Button Content="Cancel" Width="60" IsCancel="True" Click="CancelClick" Margin="2"/>
+            <Button Content="Ok" Width="60" IsDefault="True" Click="SetDataClick" Margin="2" Height="24"/>
+            <Button Content="Cancel" Width="60" IsCancel="True" Click="CancelClick" Margin="2" Height="24"/>
         </StackPanel>
     </Grid>
 </Window>
