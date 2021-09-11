@@ -45,7 +45,15 @@ namespace Checklists.Windows
             {
                 checklistVariables.Add(new ChecklistVariable(match));
             }
-            variablesListView.ItemsSource = checklistVariables;
+            if (checklistVariables.Count > 0)
+            {
+                variablesListView.ItemsSource = checklistVariables;
+            }
+            else
+            {
+                variablesListView.Visibility = Visibility.Collapsed;
+                Height = 110;
+            }
         }
 
         private List<string> GetMatchesList(List<string> strings)
